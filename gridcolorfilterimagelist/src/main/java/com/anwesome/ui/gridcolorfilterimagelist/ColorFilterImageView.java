@@ -26,6 +26,7 @@ public class ColorFilterImageView extends View {
             h = canvas.getHeight();
             bitmap = Bitmap.createScaledBitmap(bitmap,w,h,true);
         }
+        canvas.drawBitmap(bitmap,0,0,paint);
         render++;
     }
     public boolean onTouchEvent(MotionEvent event) {
