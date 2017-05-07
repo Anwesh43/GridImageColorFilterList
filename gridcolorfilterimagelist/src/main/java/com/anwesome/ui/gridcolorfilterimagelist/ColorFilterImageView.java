@@ -15,10 +15,12 @@ public class ColorFilterImageView extends View {
     private int render = 0,w,h;
     private ColorFilter colorFilter;
     private Expander expander;
+    private AnimationHandler animationHandler;
     public ColorFilterImageView(Context context,Bitmap bitmap,int color) {
         super(context);
         this.bitmap = bitmap;
         this.color = color;
+        animationHandler = new AnimationHandler(this);
     }
     public void onDraw(Canvas canvas) {
         if(render == 0) {
@@ -36,9 +38,7 @@ public class ColorFilterImageView extends View {
     }
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN && expander!=null) {
-            if(expander.handleTap(event.getX(),event.getY())) {
-
-            }
+            expander.handleTap(event.getX(),event.getY());
         }
         return true;
     }
@@ -48,7 +48,7 @@ public class ColorFilterImageView extends View {
         postInvalidate();
     }
     private class Expander {
-        private float x,y,size,deg = 0;
+        private float x,y,size,deg = 0,dir = 1;
         public Expander() {
             x = w/2;
             y = h/2;
@@ -81,8 +81,17 @@ public class ColorFilterImageView extends View {
             }
             canvas.restore();
         }
-        public boolean handleTap(float x,float y) {
-            return x>=this.x - 3*size/2 && x<=this.x+3*size/2 && y>=this.y - 3*size/2 && y<=this.y+3*size/2;
+        public void handleTap(float x,float y) {
+            boolean condition =  x>=this.x - 3*size/2 && x<=this.x+3*size/2 && y>=this.y - 3*size/2 && y<=this.y+3*size/2;
+            if(condition) {
+                if(dir == 1) {
+                    animationHandler.start();
+                }
+                else {
+                    animationHandler.end();
+                }
+                dir*=-1;
+            }
         }
     }
     private class ColorFilter {
