@@ -35,6 +35,11 @@ public class ColorFilterImageView extends View {
         render++;
     }
     public boolean onTouchEvent(MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN && expander!=null) {
+            if(expander.handleTap(event.getX(),event.getY())) {
+
+            }
+        }
         return true;
     }
     public void update(float factor) {
@@ -75,6 +80,9 @@ public class ColorFilterImageView extends View {
                 canvas.restore();
             }
             canvas.restore();
+        }
+        public boolean handleTap(float x,float y) {
+            return x>=this.x - 3*size/2 && x<=this.x+3*size/2 && y>=this.y - 3*size/2 && y<=this.y+3*size/2;
         }
     }
     private class ColorFilter {
