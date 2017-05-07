@@ -13,6 +13,8 @@ public class ColorFilterImageView extends View {
     private int color;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private int render = 0,w,h;
+    private ColorFilter colorFilter;
+    private Expander expander;
     public ColorFilterImageView(Context context,Bitmap bitmap,int color) {
         super(context);
         this.bitmap = bitmap;
@@ -23,15 +25,22 @@ public class ColorFilterImageView extends View {
             w = canvas.getWidth();
             h = canvas.getHeight();
             bitmap = Bitmap.createScaledBitmap(bitmap,w,h,true);
+            colorFilter = new ColorFilter();
+            expander = new Expander();
         }
         canvas.drawBitmap(bitmap,0,0,paint);
+        colorFilter.draw(canvas,paint);
+        expander.draw(canvas,paint);
+
         render++;
     }
     public boolean onTouchEvent(MotionEvent event) {
         return true;
     }
     public void update(float factor) {
-
+        expander.update(factor);
+        colorFilter.update(factor);
+        postInvalidate();
     }
     private class Expander {
         private float x,y,size,deg = 0;
