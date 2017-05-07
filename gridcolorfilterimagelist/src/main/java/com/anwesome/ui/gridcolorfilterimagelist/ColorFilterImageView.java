@@ -68,4 +68,18 @@ public class ColorFilterImageView extends View {
             canvas.restore();
         }
     }
+    private class ColorFilter {
+        private float scale = 0;
+        public void update(float factor) {
+            scale = factor;
+        }
+        public void draw(Canvas canvas,Paint paint) {
+            canvas.save();
+            canvas.translate(w/2,h/2);
+            canvas.scale(scale,scale);
+            paint.setColor(Color.argb(150,Color.red(color),Color.green(color),Color.blue(color)));
+            canvas.drawRect(new RectF(-w/2,-h/2,w/2,h/2),paint);
+            canvas.restore();
+        }
+    }
 }
