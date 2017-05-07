@@ -52,14 +52,15 @@ public class ColorFilterImageView extends View {
         public Expander() {
             x = w/2;
             y = h/2;
-            size = w/20;
+            size = w/10;
         }
         public void update(float factor) {
             deg = 180*factor;
         }
         public void draw(Canvas canvas,Paint paint) {
             paint.setColor(Color.WHITE);
-            paint.setStrokeWidth(size/20);
+            paint.setStrokeWidth(size/12);
+            paint.setStrokeJoin(Paint.Join.ROUND);
             canvas.save();
             canvas.translate(x,y);
             for(int i=0;i<4;i++) {
@@ -68,11 +69,11 @@ public class ColorFilterImageView extends View {
                 canvas.save();
                 canvas.translate(0,-3*size/5);
                 canvas.rotate(deg);
-                canvas.drawLine(0,-size/5,0,-size,paint);
+                canvas.drawLine(0,2*size/5,0,-2*size/5,paint);
                 for(int j=0;j<2;j++) {
                     canvas.save();
-                    canvas.translate(0,-size);
-                    canvas.rotate(45*(2*i-1));
+                    canvas.translate(0,-2*size/5);
+                    canvas.rotate(45*(2*j-1));
                     canvas.drawLine(0,0,0,size/3,paint);
                     canvas.restore();
                 }

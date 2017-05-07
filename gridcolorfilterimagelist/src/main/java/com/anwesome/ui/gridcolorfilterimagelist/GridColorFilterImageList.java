@@ -26,7 +26,7 @@ public class GridColorFilterImageList {
     }
     public void show() {
         if(!isShown) {
-            activity.setContentView(gridImageLayout);
+            activity.setContentView(scrollView);
             isShown = true;
         }
     }
